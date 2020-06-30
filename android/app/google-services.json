@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "443737519180",
+    "firebase_url": "https://bettertiktok-7ae7a.firebaseio.com",
+    "project_id": "bettertiktok-7ae7a",
+    "storage_bucket": "bettertiktok-7ae7a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:443737519180:android:1d408831a10b2331a170e9",
+        "android_client_info": {
+          "package_name": "com.example.tiktok_alt"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "443737519180-nhkpf700dd42jgpcd9vam2rsgm36ptt1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDMYV7GcVqpE6GZGwzmkpnTpYNJazObgH8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "443737519180-nhkpf700dd42jgpcd9vam2rsgm36ptt1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
