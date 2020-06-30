@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tiktok_alt/screens/home_pageview.dart';
 import 'package:tiktok_alt/screens/homepage.dart';
 
 void main() {
@@ -15,25 +16,7 @@ class MyApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       debugShowCheckedModeBanner: false,
-      home: Homepage(),
+      home: HomepageView(),
     );
   }
 }
-
-// class MyHomePage extends StatefulWidget {
-//   MyHomePage({Key key, this.title}) : super(key: key);
-
-//   final String title;
-
-//   @override
-//   _MyHomePageState createState() => _MyHomePageState();
-// }
-
-// class _MyHomePageState extends State<MyHomePage> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       body: Text("RIP TikTok"),
-//     );
-//   }
-// }
