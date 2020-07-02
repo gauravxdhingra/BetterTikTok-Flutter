@@ -9,7 +9,7 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blueGrey,
+      backgroundColor: Colors.black,
       body: Stack(
         children: [
           Column(
@@ -44,10 +44,6 @@ class _HomeState extends State<Home> {
                       Container(
                         height: 5,
                       ),
-                      // CircleAvatar(
-                      //   backgroundColor: Colors.blue,
-                      //   radius: 3,
-                      // ),
                     ],
                   ),
                 ],
@@ -73,38 +69,39 @@ class _HomeState extends State<Home> {
             ),
           ),
           Positioned(
+            // TODO: Add Text Counter under all icons
             bottom: 20,
             right: 7,
             child: Column(
               children: [
-                Icon(
-                  Icons.account_circle,
-                  color: Colors.white,
-                  size: 40,
+                SideActionIcons(
+                  icon: Icons.account_circle,
+                  count: '100',
+                  action: () {},
                 ),
                 SizedBox(
                   height: 12,
                 ),
-                Icon(
-                  Icons.favorite,
-                  color: Colors.white,
-                  size: 40,
+                SideActionIcons(
+                  icon: Icons.favorite,
+                  count: '100',
+                  action: () {},
                 ),
                 SizedBox(
                   height: 12,
                 ),
-                Icon(
-                  Icons.message,
-                  color: Colors.white,
-                  size: 40,
+                SideActionIcons(
+                  icon: Icons.message,
+                  count: '100',
+                  action: () {},
                 ),
                 SizedBox(
                   height: 12,
                 ),
-                Icon(
-                  Icons.share,
-                  color: Colors.white,
-                  size: 40,
+                SideActionIcons(
+                  icon: Icons.share,
+                  count: '100',
+                  action: () {},
                 ),
                 SizedBox(
                   height: 20,
@@ -122,6 +119,35 @@ class _HomeState extends State<Home> {
           ),
         ],
       ),
+    );
+  }
+}
+
+class SideActionIcons extends StatelessWidget {
+  const SideActionIcons({
+    Key key,
+    this.icon,
+    this.count,
+    this.action,
+  }) : super(key: key);
+
+  final IconData icon;
+  final String count;
+  final Function action;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        IconButton(
+          icon: Icon(icon),
+          color: Colors.white,
+          iconSize: 40,
+          onPressed: action,
+        ),
+        Text(count),
+      ],
     );
   }
 }

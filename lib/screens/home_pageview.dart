@@ -15,7 +15,7 @@ class _HomepageViewState extends State<HomepageView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.red,
+      backgroundColor: Colors.black,
       body: PageView(
         children: [
           Home(),
