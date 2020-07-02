@@ -38,7 +38,7 @@ class _HomeState extends State<Home> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Text(
-                        'For You',
+                        'For you',
                         style: TextStyle(fontSize: 16, color: Colors.white),
                       ),
                       Container(
@@ -53,7 +53,7 @@ class _HomeState extends State<Home> {
           Positioned(
             bottom: 150,
             child: Container(
-              child: Text('User'),
+              child: Text('@user'),
             ),
           ),
           Positioned(
@@ -71,7 +71,7 @@ class _HomeState extends State<Home> {
           Positioned(
             // TODO: Add Text Counter under all icons
             bottom: 20,
-            right: 7,
+            right: 5,
             child: Column(
               children: [
                 SideActionIcons(
@@ -145,6 +145,7 @@ class SideActionIcons extends StatelessWidget {
           color: Colors.white,
           iconSize: 40,
           onPressed: action,
+          padding: EdgeInsets.all(0),
         ),
         Text(count),
       ],

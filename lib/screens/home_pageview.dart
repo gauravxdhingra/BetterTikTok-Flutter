@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tiktok_alt/screens/home_video_scroll_page.dart';
+import 'package:tiktok_alt/screens/login_signup_screen.dart';
 import 'package:tiktok_alt/screens/messages_screen.dart';
 import 'package:tiktok_alt/screens/search_screen.dart';
 
@@ -18,6 +19,7 @@ class _HomepageViewState extends State<HomepageView> {
       backgroundColor: Colors.black,
       body: PageView(
         children: [
+          LoginSignup(),
           Home(),
           SearchScreen(),
           MessagesScreen(),

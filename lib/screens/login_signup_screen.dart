@@ -6,7 +6,21 @@ class LoginSignup extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Text('Login'),
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage(
+            'assets/images/SignUp.jpg',
+          ),
+          fit: BoxFit.cover,
+        ),
+      ),
+      child: Column(
+        children: [
+          Text('LitSnap - Short Videos'),
+          Text('Get Started'),
+          // TODO: Google Facebook Instagram Email/Phone
+        ],
+      ),
     );
   }
 }
