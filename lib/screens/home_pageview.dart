@@ -25,18 +25,19 @@ class _HomepageViewState extends State<HomepageView> {
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
+        elevation: 0,
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
         selectedItemColor: Colors.black,
         unselectedItemColor: Colors.pink,
-        backgroundColor: Colors.transparent,
+        backgroundColor: Colors.black,
         items: [
-          BottomNavigationBarItem(icon: Icon(Icons.home), title: Text('Home')),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.search), title: Text('Search')),
+          BottomNavigationBarItem(icon: Icon(Icons.home), title: Text('')),
+          BottomNavigationBarItem(icon: Icon(Icons.search), title: Text('')),
           BottomNavigationBarItem(icon: Icon(Icons.add), title: Text('')),
+          BottomNavigationBarItem(icon: Icon(Icons.textsms), title: Text('')),
           BottomNavigationBarItem(
-              icon: Icon(Icons.textsms), title: Text('Messages')),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.account_circle), title: Text('Account')),
+              icon: Icon(Icons.account_circle), title: Text('')),
         ],
       ),
     );
