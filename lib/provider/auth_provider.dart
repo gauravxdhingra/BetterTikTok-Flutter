@@ -57,13 +57,15 @@ class AuthProvider with ChangeNotifier {
     googleSignIn.signOut();
   }
 
+  String username = 'user1';
+
   createUserInFirestore() async {
     // check if user exists in users collection in database(acc to their id)
     final GoogleSignInAccount user = googleSignIn.currentUser;
-    DocumentSnapshot doc = await usersRef.document(user.email).get();
+    DocumentSnapshot doc = await usersRef.document(username).get();
     // DocumentSnapshot doc = await usersRef.document(user.id).get();
     if (!doc.exists) {
-      await usersRef.document(user.email).setData({
+      await usersRef.document(username).setData({
         'name': user.displayName,
         'id': user.id,
         'bio': '',
@@ -74,9 +76,9 @@ class AuthProvider with ChangeNotifier {
         'email': user.email,
         'photoUrl': user.photoUrl,
         // TODO: Username input
-        'username': 'Username',
+        'username': username,
       });
-      doc = await usersRef.document(user.email).get();
+      doc = await usersRef.document(username).get();
     }
     currentUser = User.fromDocument(doc);
     // print(currentUser);

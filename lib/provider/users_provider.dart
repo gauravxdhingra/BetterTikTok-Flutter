@@ -27,34 +27,13 @@ class UsersProvider with ChangeNotifier {
     return searchResultsFuture;
   }
 
-  // createUserInFirestore() async {
-  //   // check if user exists in users collection in database(acc to their id)
-  //   final GoogleSignInAccount user = googleSignIn.currentUser;
-  //   DocumentSnapshot doc = await usersRef.document(user.email).get();
-  //   // DocumentSnapshot doc = await usersRef.document(user.id).get();
-  //   if (!doc.exists) {
-  //     await usersRef.document(user.email).setData({
-  //       'name': user.displayName,
-  //       'id': user.id,
-  //       'bio': '',
-  //       'following': 0,
-  //       'fame': 0,
-  //       'hearts': 0,
-  //       'private': false,
-  //       'email': user.email,
-  //       'photoUrl': user.photoUrl,
-  //       // TODO: Username input
-  //       'username': 'Username',
-  //     });
-  //     doc = await usersRef.document(user.email).get();
-  //   }
-  //   currentUser = User.fromDocument(doc);
-  //   // print(currentUser);
-  //   // setState(() {
-  //   //   isAuth = true;
-  //   // });
-  //   isAuth = true;
-  //   notifyListeners();
-  //   // print(currentUser.username);
-  // }
+  Future<User> fetchUserData(String username) async {
+    // check if user exists in users collection in database(acc to their id)
+    // final GoogleSignInAccount user = googleSignIn.currentUser;
+    DocumentSnapshot doc = await usersRef.document(username).get();
+    // DocumentSnapshot doc = await usersRef.document(user.id).get();
+
+    User fetchedUser = User.fromDocument(doc);
+    return fetchedUser;
+  }
 }

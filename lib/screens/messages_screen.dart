@@ -49,9 +49,14 @@ class _MessagesScreenState extends State<MessagesScreen> {
                 ),
               ),
               trailing: CircleAvatar(
-                backgroundColor: Colors.red,
+                backgroundColor: Colors.white.withOpacity(0.35),
                 child: Center(
-                  child: Text('3'),
+                  child: Text(
+                    '3',
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
                 ),
                 radius: 15,
               ),
@@ -75,9 +80,14 @@ class _MessagesScreenState extends State<MessagesScreen> {
                 ),
               ),
               trailing: CircleAvatar(
-                backgroundColor: Colors.red,
+                backgroundColor: Colors.white.withOpacity(0.35),
                 child: Center(
-                  child: Text('2'),
+                  child: Text(
+                    '9',
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
                 ),
                 radius: 15,
               ),
