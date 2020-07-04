@@ -17,6 +17,13 @@ class HomepageView extends StatefulWidget {
 }
 
 class _HomepageViewState extends State<HomepageView> {
+  PageController _pageConroller;
+  @override
+  void initState() {
+    _pageConroller = PageController();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     Provider.of<AuthProvider>(context);
@@ -30,8 +37,11 @@ class _HomepageViewState extends State<HomepageView> {
           MessagesScreen(),
           AccountPage(),
         ],
+        controller: _pageConroller,
       ),
-      bottomSheet: BottomNavBarHome(),
+      bottomSheet: BottomNavBarHome(
+        pageController: _pageConroller,
+      ),
       // bottomNavigationBar: BottomNavigationBar(
       //   elevation: 0,
       //   showSelectedLabels: false,

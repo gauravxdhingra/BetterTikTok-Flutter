@@ -2,8 +2,9 @@ import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 
 class BottomNavBarHome extends StatefulWidget {
-  BottomNavBarHome({Key key}) : super(key: key);
-
+  BottomNavBarHome({Key key, this.pageController});
+  // final int active;
+  final PageController pageController;
   @override
   _BottomNavBarHomeState createState() => _BottomNavBarHomeState();
 }
@@ -35,31 +36,35 @@ class _BottomNavBarHomeState extends State<BottomNavBarHome> {
   @override
   Widget build(BuildContext context) {
     double w = MediaQuery.of(context).size.width;
-    return Container(
-      height: 80,
-      color: Colors.black,
-      child: Stack(
-        children: [
-          AnimatedContainer(
-            duration: Duration(milliseconds: 200),
-            alignment: Alignment(active.x, -1),
-            child: AnimatedContainer(
-              duration: Duration(milliseconds: 1000),
-              height: 8,
-              width: w * 0.2,
-              color: active.color,
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Container(
+        height: 60,
+        color: Colors.black,
+        width: w,
+        child: Stack(
+          children: [
+            AnimatedContainer(
+              duration: Duration(milliseconds: 200),
+              alignment: Alignment(active.x, -1),
+              child: AnimatedContainer(
+                duration: Duration(milliseconds: 1000),
+                height: 8,
+                width: w * 0.2,
+                color: active.color,
+              ),
             ),
-          ),
-          Container(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: items.map((k) {
-                return _flare(k);
-              }).toList(),
-            ),
-          )
-        ],
+            Container(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: items.map((k) {
+                  return _flare(k);
+                }).toList(),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
@@ -71,7 +76,7 @@ class _BottomNavBarHomeState extends State<BottomNavBarHome> {
         child: Padding(
           padding: EdgeInsets.only(top: 20),
           child: FlareActor(
-            'assets/${item.name}.flr',
+            'assets/flare/${item.name}.flr',
             alignment: Alignment.center,
             fit: BoxFit.contain,
             animation: item.name == active.name ? 'go' : 'idle',
@@ -81,6 +86,11 @@ class _BottomNavBarHomeState extends State<BottomNavBarHome> {
       onTap: () {
         setState(() {
           active = item;
+          widget.pageController.animateToPage(
+            (active.x * 2 + 2).toInt(),
+            duration: Duration(milliseconds: 1000),
+            curve: Curves.fastOutSlowIn,
+          );
         });
       },
     );
