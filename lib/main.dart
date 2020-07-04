@@ -16,27 +16,34 @@ class MyApp extends StatelessWidget {
         SystemUiOverlayStyle(statusBarColor: Colors.transparent));
     return ChangeNotifierProvider(
       create: (ctx) => AuthProvider(),
-      child: MaterialApp(
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-          accentColor: Colors.pink[700],
-          visualDensity: VisualDensity.adaptivePlatformDensity,
-          textTheme: TextTheme(
-            bodyText1: TextStyle(
-              color: Colors.white,
-            ),
-            bodyText2: TextStyle(
-              color: Colors.white,
+      child: MultiProvider(
+        providers: [
+          ChangeNotifierProvider.value(
+            value: AuthProvider(),
+          ),
+        ],
+        child: MaterialApp(
+          title: 'Flutter Demo',
+          theme: ThemeData(
+            primarySwatch: Colors.blue,
+            accentColor: Colors.pink[700],
+            visualDensity: VisualDensity.adaptivePlatformDensity,
+            textTheme: TextTheme(
+              bodyText1: TextStyle(
+                color: Colors.white,
+              ),
+              bodyText2: TextStyle(
+                color: Colors.white,
+              ),
             ),
           ),
+          debugShowCheckedModeBanner: false,
+          // home: HomepageView(),
+          routes: {
+            '/': (ctx) => LoginSignup(),
+            HomepageView.routename: (ctx) => HomepageView(),
+          },
         ),
-        debugShowCheckedModeBanner: false,
-        // home: HomepageView(),
-        routes: {
-          '/': (ctx) => LoginSignup(),
-          HomepageView.routename: (ctx) => HomepageView(),
-        },
       ),
     );
   }

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_brand_icons/flutter_brand_icons.dart';
+import 'package:provider/provider.dart';
+import 'package:tiktok_alt/provider/auth_provider.dart';
 import 'package:tiktok_alt/screens/home_pageview.dart';
 
 class LoginSignup extends StatelessWidget {
@@ -7,6 +9,7 @@ class LoginSignup extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final auth = Provider.of<AuthProvider>(context);
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
@@ -64,7 +67,10 @@ class LoginSignup extends StatelessWidget {
                           LoginOptions(
                             method: 'Google',
                             icon: BrandIcons.google,
-                            action: () {},
+                            action: () async {
+                              await auth.googleSuppresedSignIn();
+                              auth.login();
+                            },
                           ),
                           LoginOptions(
                             method: 'Phone/Email',

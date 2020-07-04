@@ -72,10 +72,10 @@ class AuthProvider with ChangeNotifier {
       doc = await usersRef.document(user.email).get();
     }
     currentUser = User.fromDocument(doc);
-    print(currentUser);
+    // print(currentUser);
     // setState(() {
     //   isAuth = true;
     // });
-    print(currentUser.username);
+    // print(currentUser.username);
   }
 }
