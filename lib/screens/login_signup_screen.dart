@@ -23,18 +23,30 @@ class LoginSignup extends StatelessWidget {
             children: [
               Padding(
                 padding: const EdgeInsets.only(top: 20, left: 40),
-                child: Text(
-                  'LitSnap - Short Videos',
-                  style: TextStyle(fontSize: 30),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'LitSnap',
+                      style: TextStyle(fontSize: 70),
+                    ),
+                    Text(
+                      'Short Videos',
+                      style: TextStyle(fontSize: 30),
+                    ),
+                    Text(
+                      'Get Started',
+                      style: TextStyle(fontSize: 18),
+                    ),
+                  ],
                 ),
               ),
-              Text('Get Started'),
               Stack(
                 children: [
                   Positioned(
-                    bottom: MediaQuery.of(context).size.height * 1 / 4,
+                    bottom: MediaQuery.of(context).size.height * 1 / 10,
                     child: Container(
-                      // width: MediaQuery.of(context).size.width,
+                      width: MediaQuery.of(context).size.width,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -67,6 +79,7 @@ class LoginSignup extends StatelessWidget {
               ),
               Positioned(
                 bottom: 0,
+                right: 0,
                 child: FlatButton(
                   child: Text('Skip Login'),
                   onPressed: () {
@@ -96,21 +109,32 @@ class LoginOptions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: action,
-      child: Container(
-        width: MediaQuery.of(context).size.width * 0.85,
-        padding: EdgeInsets.symmetric(vertical: 10, horizontal: 50),
-        color: Colors.white,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Icon(icon),
-            Text(method),
-          ],
+    return Column(
+      children: [
+        GestureDetector(
+          onTap: action,
+          child: Container(
+            width: MediaQuery.of(context).size.width * 0.7,
+            padding: EdgeInsets.symmetric(vertical: 10, horizontal: 50),
+
+            decoration: BoxDecoration(
+              color: Colors.white70,
+              borderRadius: BorderRadius.circular(20),
+            ),
+            // margin: EdgeInsets.symmetric(horizontal: 50),
+            child: Row(
+              // mainAxisAlignment: MainAxisAlignment.center,
+              // crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Icon(icon),
+                SizedBox(width: 20),
+                Text(method, style: TextStyle(color: Colors.black)),
+              ],
+            ),
+          ),
         ),
-      ),
+        SizedBox(height: 20),
+      ],
     );
   }
 }
