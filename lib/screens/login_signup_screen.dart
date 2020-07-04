@@ -70,6 +70,8 @@ class LoginSignup extends StatelessWidget {
                             action: () async {
                               await auth.googleSuppresedSignIn();
                               auth.login();
+                              Navigator.pushNamed(
+                                  context, HomepageView.routename);
                             },
                           ),
                           LoginOptions(

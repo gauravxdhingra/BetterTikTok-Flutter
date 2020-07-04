@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tiktok_alt/provider/auth_provider.dart';
+import 'package:tiktok_alt/widgets/bottom_navbar.dart';
 
 import 'account_page.dart';
 import 'home.dart';
@@ -30,6 +31,7 @@ class _HomepageViewState extends State<HomepageView> {
           AccountPage(),
         ],
       ),
+      bottomSheet: BottomNavBarHome(),
       // bottomNavigationBar: BottomNavigationBar(
       //   elevation: 0,
       //   showSelectedLabels: false,

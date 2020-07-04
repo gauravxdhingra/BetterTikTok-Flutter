@@ -12,7 +12,11 @@ class _BottomNavBarHomeState extends State<BottomNavBarHome> {
   Widget build(BuildContext context) {
     return Container(
       child: Row(
-        children: [],
+        children: [
+          Container(
+            height: 60,
+          )
+        ],
       ),
     );
   }

@@ -7,6 +7,7 @@ class AuthProvider with ChangeNotifier {
   final GoogleSignIn googleSignIn = GoogleSignIn();
   final usersRef = Firestore.instance.collection('users');
   User currentUser;
+  bool isAuth = false;
 
   googleSuppresedSignIn() async {
     googleSignIn.onCurrentUserChanged.listen(
@@ -32,6 +33,8 @@ class AuthProvider with ChangeNotifier {
     if (account != null) {
       // print('$account');
       await createUserInFirestore();
+      isAuth = true;
+      notifyListeners();
       // setState(() {
       //   isAuth = true;
       // });
@@ -39,11 +42,15 @@ class AuthProvider with ChangeNotifier {
       // setState(() {
       //   isAuth = false;
       // });
+      isAuth = false;
+      notifyListeners();
     }
   }
 
   login() {
     googleSignIn.signIn();
+    isAuth = true;
+    notifyListeners();
   }
 
   logout() {
@@ -76,6 +83,8 @@ class AuthProvider with ChangeNotifier {
     // setState(() {
     //   isAuth = true;
     // });
+    isAuth = true;
+    notifyListeners();
     // print(currentUser.username);
   }
 }

@@ -63,14 +63,14 @@ class _HomeState extends State<Home> {
             ),
           ),
           Positioned(
-            bottom: 10,
+            bottom: 70,
             child: Container(
               child: Text('Audio'),
             ),
           ),
           Positioned(
             // TODO: Add Text Counter under all icons
-            bottom: 20,
+            bottom: 80,
             right: 5,
             child: Column(
               children: [
