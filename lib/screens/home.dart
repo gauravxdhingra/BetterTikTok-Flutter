@@ -136,10 +136,26 @@ class _HomeState extends State<Home> {
           PageView(
             children: [
               Container(
-                child: Center(child: Text('1')),
+                child: PageView.builder(
+                  itemCount: 10,
+                  scrollDirection: Axis.vertical,
+                  itemBuilder: (context, i) => Container(
+                    child: Center(
+                      child: Text('Following ' + i.toString()),
+                    ),
+                  ),
+                ),
               ),
               Container(
-                child: Center(child: Text('2')),
+                child: PageView.builder(
+                  itemCount: 10,
+                  scrollDirection: Axis.vertical,
+                  itemBuilder: (context, i) => Container(
+                    child: Center(
+                      child: Text('For you ' + i.toString()),
+                    ),
+                  ),
+                ),
               ),
             ],
             controller: _pageController,

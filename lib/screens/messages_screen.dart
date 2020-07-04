@@ -12,7 +12,7 @@ class _MessagesScreenState extends State<MessagesScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Container(
-        color: Colors.black,
+        // color: Colors.black,
         child: Column(
           children: [
             Row(
@@ -23,7 +23,7 @@ class _MessagesScreenState extends State<MessagesScreen> {
                   color: Colors.white,
                   onPressed: () {},
                 ),
-                Text('Direct Message'),
+                Text('Notifications'),
                 IconButton(
                   icon: Icon(Icons.add),
                   color: Colors.white,
@@ -31,6 +31,60 @@ class _MessagesScreenState extends State<MessagesScreen> {
                 ),
               ],
             ),
+            ListTile(
+              leading: Icon(
+                Icons.message,
+                color: Colors.white,
+              ),
+              title: Text(
+                'Direct Message',
+                style: TextStyle(
+                  color: Colors.white,
+                ),
+              ),
+              subtitle: Text(
+                'user1, user2, user3',
+                style: TextStyle(
+                  color: Colors.white,
+                ),
+              ),
+              trailing: CircleAvatar(
+                backgroundColor: Colors.red,
+                child: Center(
+                  child: Text('3'),
+                ),
+                radius: 15,
+              ),
+              onTap: () {},
+            ),
+            ListTile(
+              leading: Icon(
+                Icons.supervised_user_circle,
+                color: Colors.white,
+              ),
+              title: Text(
+                'Follow requests',
+                style: TextStyle(
+                  color: Colors.white,
+                ),
+              ),
+              subtitle: Text(
+                'user1, user2, user3',
+                style: TextStyle(
+                  color: Colors.white,
+                ),
+              ),
+              trailing: CircleAvatar(
+                backgroundColor: Colors.red,
+                child: Center(
+                  child: Text('2'),
+                ),
+                radius: 15,
+              ),
+              onTap: () {},
+            ),
+            Divider(color: Colors.white30),
+            Text('No Notifications'),
           ],
         ),
       ),
