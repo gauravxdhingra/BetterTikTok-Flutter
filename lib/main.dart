@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tiktok_alt/provider/auth_provider.dart';
+import 'package:tiktok_alt/provider/users_provider.dart';
 import 'package:tiktok_alt/screens/home_pageview.dart';
 import 'package:flutter/services.dart';
 import 'package:tiktok_alt/screens/login_signup_screen.dart';
@@ -21,6 +22,9 @@ class MyApp extends StatelessWidget {
         providers: [
           ChangeNotifierProvider.value(
             value: AuthProvider(),
+          ),
+          ChangeNotifierProvider.value(
+            value: UsersProvider(),
           ),
         ],
         child: MaterialApp(
