@@ -14,7 +14,7 @@ class _VideoGridState extends State<VideoGrid> {
       child: GridView.builder(
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 3,
-          childAspectRatio: 1,
+          childAspectRatio: 16/9,
         ),
         itemCount: 8,
         itemBuilder: (context, i) => Container(
