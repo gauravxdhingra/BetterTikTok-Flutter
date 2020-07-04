@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 class NewVideo extends StatefulWidget {
   NewVideo({Key key}) : super(key: key);
 
+  static const routename = 'newvideo';
+
   @override
   _NewVideoState createState() => _NewVideoState();
 }

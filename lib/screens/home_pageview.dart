@@ -38,6 +38,7 @@ class _HomepageViewState extends State<HomepageView> {
           AccountPage(),
         ],
         controller: _pageConroller,
+        physics: NeverScrollableScrollPhysics(),
       ),
       bottomSheet: BottomNavBarHome(
         pageController: _pageConroller,

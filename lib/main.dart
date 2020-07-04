@@ -4,6 +4,7 @@ import 'package:tiktok_alt/provider/auth_provider.dart';
 import 'package:tiktok_alt/screens/home_pageview.dart';
 import 'package:flutter/services.dart';
 import 'package:tiktok_alt/screens/login_signup_screen.dart';
+import 'package:tiktok_alt/screens/new_video.dart';
 
 void main() {
   runApp(MyApp());
@@ -42,6 +43,7 @@ class MyApp extends StatelessWidget {
           routes: {
             '/': (ctx) => LoginSignup(),
             HomepageView.routename: (ctx) => HomepageView(),
+            NewVideo.routename: (ctx) => NewVideo(),
           },
         ),
       ),

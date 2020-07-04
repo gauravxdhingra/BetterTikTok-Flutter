@@ -1,5 +1,6 @@
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
+import 'package:tiktok_alt/screens/new_video.dart';
 
 class BottomNavBarHome extends StatefulWidget {
   BottomNavBarHome({Key key, this.pageController});
@@ -26,45 +27,47 @@ class _BottomNavBarHomeState extends State<BottomNavBarHome> {
   ];
 
   MenuItem active;
+
   @override
   void initState() {
     super.initState();
 
-    active = items[0];
+    // active = items[0];
+
+    active = items[widget.pageController.page.round()];
   }
 
   @override
   Widget build(BuildContext context) {
+    // active = items[widget.pageController.page.round()];
+
     double w = MediaQuery.of(context).size.width;
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      child: Container(
-        height: 60,
-        color: Colors.black,
-        width: w,
-        child: Stack(
-          children: [
-            AnimatedContainer(
-              duration: Duration(milliseconds: 200),
-              alignment: Alignment(active.x, -1),
-              child: AnimatedContainer(
-                duration: Duration(milliseconds: 1000),
-                height: 8,
-                width: w * 0.2,
-                color: active.color,
-              ),
+    return Container(
+      height: 60,
+      color: Colors.black,
+      width: w,
+      child: Stack(
+        children: [
+          AnimatedContainer(
+            duration: Duration(milliseconds: 200),
+            alignment: Alignment(active.x, -1),
+            child: AnimatedContainer(
+              duration: Duration(milliseconds: 1000),
+              height: 8,
+              width: w * 0.2,
+              color: active.color,
             ),
-            Container(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: items.map((k) {
-                  return _flare(k);
-                }).toList(),
-              ),
-            )
-          ],
-        ),
+          ),
+          Container(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: items.map((k) {
+                return _flare(k);
+              }).toList(),
+            ),
+          )
+        ],
       ),
     );
   }
@@ -86,11 +89,32 @@ class _BottomNavBarHomeState extends State<BottomNavBarHome> {
       onTap: () {
         setState(() {
           active = item;
-          widget.pageController.animateToPage(
-            (active.x * 2 + 2).toInt(),
-            duration: Duration(milliseconds: 1000),
-            curve: Curves.fastOutSlowIn,
-          );
+          if (active.x == -1)
+            widget.pageController.animateToPage(
+              0,
+              duration: Duration(milliseconds: 1000),
+              curve: Curves.fastOutSlowIn,
+            );
+          else if (active.x == -0.5)
+            widget.pageController.animateToPage(
+              1,
+              duration: Duration(milliseconds: 1000),
+              curve: Curves.fastOutSlowIn,
+            );
+          else if (active.x == 0)
+            Navigator.pushNamed(context, NewVideo.routename);
+          else if (active.x == 0.5)
+            widget.pageController.animateToPage(
+              2,
+              duration: Duration(milliseconds: 1000),
+              curve: Curves.fastOutSlowIn,
+            );
+          else if (active.x == 1)
+            widget.pageController.animateToPage(
+              3,
+              duration: Duration(milliseconds: 1000),
+              curve: Curves.fastOutSlowIn,
+            );
         });
       },
     );

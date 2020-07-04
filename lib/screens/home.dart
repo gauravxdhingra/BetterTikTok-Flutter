@@ -6,6 +6,15 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  PageController _pageController;
+  @override
+  void initState() {
+    _pageController = PageController();
+    super.initState();
+  }
+
+  int page = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,6 +26,7 @@ class _HomeState extends State<Home> {
               SizedBox(height: MediaQuery.of(context).padding.top + 30),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Column(
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -28,10 +38,11 @@ class _HomeState extends State<Home> {
                       Container(
                         height: 5,
                       ),
-                      CircleAvatar(
-                        backgroundColor: Colors.blue,
-                        radius: 3,
-                      ),
+                      if (page == 0)
+                        CircleAvatar(
+                          backgroundColor: Colors.blue,
+                          radius: 3,
+                        ),
                     ],
                   ),
                   Column(
@@ -44,6 +55,11 @@ class _HomeState extends State<Home> {
                       Container(
                         height: 5,
                       ),
+                      if (page == 1)
+                        CircleAvatar(
+                          backgroundColor: Colors.blue,
+                          radius: 3,
+                        ),
                     ],
                   ),
                 ],
@@ -116,6 +132,23 @@ class _HomeState extends State<Home> {
                 ),
               ],
             ),
+          ),
+          PageView(
+            children: [
+              Container(
+                child: Center(child: Text('1')),
+              ),
+              Container(
+                child: Center(child: Text('2')),
+              ),
+            ],
+            controller: _pageController,
+            onPageChanged: (i) {
+              setState(() {
+                print(i);
+                page = i;
+              });
+            },
           ),
         ],
       ),
