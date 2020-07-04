@@ -9,6 +9,8 @@ import 'login_signup_screen.dart';
 import 'messages_screen.dart';
 import 'search_screen.dart';
 
+int page = 0;
+
 class HomepageView extends StatefulWidget {
   static const routename = 'homepageview';
 
@@ -39,6 +41,11 @@ class _HomepageViewState extends State<HomepageView> {
         ],
         controller: _pageConroller,
         physics: NeverScrollableScrollPhysics(),
+        onPageChanged: (i) {
+          setState(() {
+            page = i;
+          });
+        },
       ),
       bottomSheet: BottomNavBarHome(
         pageController: _pageConroller,

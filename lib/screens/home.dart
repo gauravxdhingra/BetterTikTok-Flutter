@@ -145,7 +145,7 @@ class _HomeState extends State<Home> {
             controller: _pageController,
             onPageChanged: (i) {
               setState(() {
-                print(i);
+                // print(i);
                 page = i;
               });
             },

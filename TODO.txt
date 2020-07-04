@@ -1,1 +1,1 @@
-Giphy NavBar
+Fix Navbar Animation + button

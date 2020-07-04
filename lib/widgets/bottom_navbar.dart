@@ -1,5 +1,6 @@
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
+import 'package:tiktok_alt/screens/home_pageview.dart';
 import 'package:tiktok_alt/screens/new_video.dart';
 
 class BottomNavBarHome extends StatefulWidget {
@@ -34,7 +35,11 @@ class _BottomNavBarHomeState extends State<BottomNavBarHome> {
 
     // active = items[0];
 
-    active = items[widget.pageController.page.round()];
+    // active = items[widget.pageController.page.round()];
+    if (page < 2)
+      active = items[page];
+    else
+      active = items[page + 1];
   }
 
   @override
