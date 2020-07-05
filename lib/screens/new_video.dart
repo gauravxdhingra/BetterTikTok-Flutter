@@ -40,10 +40,39 @@ class _NewVideoState extends State<NewVideo> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: !controller.value.isInitialized
-          ? Container()
-          : AspectRatio(
-              aspectRatio: controller.value.aspectRatio,
-              child: CameraPreview(controller)),
+          ? Container(
+              child: Center(
+                child: Text('New Video'),
+              ),
+            )
+          : Stack(
+              children: [
+                AspectRatio(
+                  aspectRatio: controller.value.aspectRatio,
+                  child: CameraPreview(controller),
+                ),
+                Positioned(
+                  bottom: 0,
+                  child: RecordButton(),
+                ),
+              ],
+            ),
+    );
+  }
+}
+
+class RecordButton extends StatelessWidget {
+  const RecordButton({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: CircleAvatar(
+        backgroundColor: Colors.red,
+        radius: 50,
+      ),
     );
   }
 }
