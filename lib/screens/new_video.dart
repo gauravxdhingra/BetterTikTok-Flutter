@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:camera/camera.dart';
 
 class NewVideo extends StatefulWidget {
   NewVideo({Key key}) : super(key: key);
@@ -10,6 +11,13 @@ class NewVideo extends StatefulWidget {
 }
 
 class _NewVideoState extends State<NewVideo> {
+
+
+
+
+
+ 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

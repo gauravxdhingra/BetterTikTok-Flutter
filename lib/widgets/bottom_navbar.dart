@@ -1,3 +1,4 @@
+import 'package:camera/camera.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:tiktok_alt/screens/home_pageview.dart';
@@ -106,9 +107,9 @@ class _BottomNavBarHomeState extends State<BottomNavBarHome> {
               duration: Duration(milliseconds: 1000),
               curve: Curves.fastOutSlowIn,
             );
-          else if (active.x == 0)
-            Navigator.pushNamed(context, NewVideo.routename);
-          else if (active.x == 0.5)
+          else if (active.x == 0) {
+            goToNewVideo();
+          } else if (active.x == 0.5)
             widget.pageController.animateToPage(
               2,
               duration: Duration(milliseconds: 1000),
@@ -123,5 +124,10 @@ class _BottomNavBarHomeState extends State<BottomNavBarHome> {
         });
       },
     );
+  }
+
+  goToNewVideo() async {
+    List<CameraDescription> cameras = await availableCameras();
+    Navigator.pushNamed(context, NewVideo.routename);
   }
 }
