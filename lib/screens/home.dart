@@ -16,7 +16,7 @@ class _HomeState extends State<Home> {
     _pageController = PageController();
     super.initState();
     _controller = VideoPlayerController.network(
-      'https://firebasestorage.googleapis.com/v0/b/bettertiktok-7ae7a.appspot.com/o/1.mp4?alt=media&token=10998175-ce89-4d49-99bb-5c018de5b3d7',
+      'https://srv-file22.gofile.io/download/alL3Eu/2.mp4',
     )..initialize().then((_) {
         // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
         _controller.play();
@@ -74,9 +74,14 @@ class _HomeState extends State<Home> {
                   height: 5,
                 ),
                 if (page == 0)
-                  CircleAvatar(
-                    backgroundColor: Colors.blue,
-                    radius: 3,
+                  // CircleAvatar(
+                  //   backgroundColor: Colors.blue,
+                  //   radius: 3,
+                  // ),
+                  Container(
+                    color: Colors.white,
+                    height: 1,
+                    width: 70,
                   ),
               ],
             ),
@@ -91,9 +96,15 @@ class _HomeState extends State<Home> {
                   height: 5,
                 ),
                 if (page == 1)
-                  CircleAvatar(
-                    backgroundColor: Colors.blue,
-                    radius: 3,
+
+                  // CircleAvatar(
+                  //   backgroundColor: Colors.blue,
+                  //   radius: 3,
+                  // ),
+                  Container(
+                    color: Colors.white,
+                    height: 1,
+                    width: 70,
                   ),
               ],
             ),
@@ -113,40 +124,44 @@ class _HomeState extends State<Home> {
         itemBuilder: (context, i) => Container(
           child: Stack(
             children: [
-              Container(
-                padding: EdgeInsets.only(
-                  top: MediaQuery.of(context).padding.top + 10,
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Container(
+                  // padding: EdgeInsets.only(
+                  //   top: MediaQuery.of(context).padding.top + 10
+                  // ),
+                  padding: EdgeInsets.only(bottom: 60),
+                  child: _controller.value.initialized
+                      ? GestureDetector(
+                          child: AspectRatio(
+                            aspectRatio: _controller.value.aspectRatio,
+                            child: VideoPlayer(_controller),
+                          ),
+                          onTap: () {
+                            setState(() {
+                              _controller.value.isPlaying
+                                      ? _controller.pause()
+                                      // .whenComplete(() {
+                                      //     setState(() {
+                                      //       isTapped = true;
+                                      //     });
+                                      //   })
+                                      : _controller.play()
+                                  // .whenComplete(() {
+                                  //     setState(() {
+                                  //       isTapped = true;
+                                  //     });
+                                  //   })
+                                  ;
+                            });
+                          },
+                        )
+                      : Container(
+                          child: Center(
+                            child: CircularProgressIndicator(),
+                          ),
+                        ),
                 ),
-                child: _controller.value.initialized
-                    ? GestureDetector(
-                        child: AspectRatio(
-                          aspectRatio: _controller.value.aspectRatio,
-                          child: VideoPlayer(_controller),
-                        ),
-                        onTap: () {
-                          setState(() {
-                            _controller.value.isPlaying
-                                    ? _controller.pause()
-                                    // .whenComplete(() {
-                                    //     setState(() {
-                                    //       isTapped = true;
-                                    //     });
-                                    //   })
-                                    : _controller.play()
-                                // .whenComplete(() {
-                                //     setState(() {
-                                //       isTapped = true;
-                                //     });
-                                //   })
-                                ;
-                          });
-                        },
-                      )
-                    : Container(
-                        child: Center(
-                          child: CircularProgressIndicator(),
-                        ),
-                      ),
               ),
               // TODO Play Pause Indicator
               // if (isTapped)
