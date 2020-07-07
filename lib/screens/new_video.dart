@@ -11,8 +11,11 @@ class NewVideo extends StatefulWidget {
 }
 
 class _NewVideoState extends State<NewVideo> {
-  CameraController controller;
+  CameraController controllerFront;
+  // CameraController controllerBack;
   List<CameraDescription> cameras;
+  bool isFront = true;
+
   @override
   void initState() {
     super.initState();
@@ -20,41 +23,114 @@ class _NewVideoState extends State<NewVideo> {
       final Map arguments = ModalRoute.of(context).settings.arguments as Map;
       cameras = arguments["cameras"];
       print(cameras);
-      controller = CameraController(cameras[1], ResolutionPreset.medium);
-      controller.initialize().then((_) {
+      controllerFront = CameraController(cameras[1], ResolutionPreset.veryHigh);
+      controllerFront.initialize().then((_) {
         if (!mounted) {
           return;
         }
         setState(() {});
       });
+      // controllerBack = CameraController(cameras[0], ResolutionPreset.veryHigh);
+      // controllerBack.initialize().then((_) {
+      //   if (!mounted) {
+      //     return;
+      //   }
+      //   setState(() {});
+      // });
     });
   }
 
   @override
   void dispose() {
-    controller?.dispose();
+    // controllerBack?.dispose();
+    controllerFront?.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: !controller.value.isInitialized
+      body: !controllerFront.value.isInitialized
+          // &&
+          //         !controllerBack.value.isInitialized
           ? Container(
               child: Center(
-                child: Text('New Video'),
+                child: IconButton(
+                  icon: Icon(Icons.switch_camera),
+                  onPressed: () {
+                    setState(() {
+                      isFront = !isFront;
+                    });
+                    // if(controller.)
+                    // print(controller.description.lensDirection);
+                    // if (controller.description.lensDirection
+                    //     .toString()
+                    //     .contains("front")) {
+                    //   controller = CameraController(
+                    //     cameras[0],
+                    //     ResolutionPreset.veryHigh,
+                    //   );
+                    //   setState(() {});
+                    // } else {
+                    //   controller = CameraController(
+                    //     cameras[1],
+                    //     ResolutionPreset.veryHigh,
+                    //   );
+                    //   setState(() {});
+                    // }
+                  },
+                ),
               ),
             )
           : Stack(
               children: [
                 AspectRatio(
-                  aspectRatio: controller.value.aspectRatio,
-                  child: CameraPreview(controller),
+                  aspectRatio:
+                      // isFront
+                      //     ?
+                      controllerFront.value.aspectRatio
+                  // : controllerBack.value.aspectRatio
+                  ,
+                  child:
+                      // isFront
+                      //     ?
+                      CameraPreview(controllerFront)
+                  // : CameraPreview(controllerBack)
+                  ,
                 ),
                 Positioned(
                   bottom: 0,
                   child: RecordButton(),
                 ),
+                Positioned(
+                  bottom: 0,
+                  right: 0,
+                  child: IconButton(
+                    icon: Icon(Icons.switch_camera),
+                    onPressed: () {
+                      // if(controller.)
+                      // print(controller.description.lensDirection);
+                      // if (controller.description.lensDirection
+                      //     .toString()
+                      //     .contains("front")) {
+                      //   controller = CameraController(
+                      //     cameras[1],
+                      //     ResolutionPreset.veryHigh,
+                      //   );
+                      //   setState(() {});
+                      // } else {
+                      //   controller = CameraController(
+                      //     cameras[0],
+                      //     ResolutionPreset.veryHigh,
+                      //   );
+                      //   setState(() {});
+                      // }
+                      setState(() {
+                        isFront = !isFront;
+                      });
+                    },
+                  ),
+                )
               ],
             ),
     );
