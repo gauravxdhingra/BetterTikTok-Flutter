@@ -36,62 +36,8 @@ class _HomeState extends State<Home> {
             children: [
               PageView(
                 children: [
-                  Container(
-                    child: PageView.builder(
-                      itemCount: 10,
-                      scrollDirection: Axis.vertical,
-                      itemBuilder: (context, i) => Container(
-                        child: Center(
-                          child: _controller.value.initialized
-                              ? GestureDetector(
-                                  child: AspectRatio(
-                                    aspectRatio: _controller.value.aspectRatio,
-                                    child: VideoPlayer(_controller),
-                                  ),
-                                  onTap: () {
-                                    setState(() {
-                                      _controller.value.isPlaying
-                                          ? _controller.pause()
-                                          : _controller.play();
-                                    });
-                                  },
-                                )
-                              : Container(),
-                        ),
-                        //  Center(
-                        //   child: Text('Following ' + i.toString()),
-                        // ),
-                      ),
-                    ),
-                  ),
-                  Container(
-                    child: PageView.builder(
-                      itemCount: 10,
-                      scrollDirection: Axis.vertical,
-                      itemBuilder: (context, i) => Container(
-                        child: Center(
-                          child: _controller.value.initialized
-                              ? GestureDetector(
-                                  child: AspectRatio(
-                                    aspectRatio: _controller.value.aspectRatio,
-                                    child: VideoPlayer(_controller),
-                                  ),
-                                  onTap: () {
-                                    setState(() {
-                                      _controller.value.isPlaying
-                                          ? _controller.pause()
-                                          : _controller.play();
-                                    });
-                                  },
-                                )
-                              : Container(),
-                        ),
-                        // Center(
-                        //   child: Text('For you ' + i.toString()),
-                        // ),
-                      ),
-                    ),
-                  ),
+                  pageViewVideoPlayer(),
+                  pageViewVideoPlayer(),
                 ],
                 controller: _pageController,
                 onPageChanged: (i) {
@@ -148,74 +94,112 @@ class _HomeState extends State<Home> {
               ),
             ],
           ),
-          Positioned(
-            bottom: 150,
-            child: Container(
-              child: Text('@user'),
-            ),
-          ),
-          Positioned(
-            bottom: 120,
-            child: Container(
-              child: Text('Caption'),
-            ),
-          ),
-          Positioned(
-            bottom: 70,
-            child: Container(
-              child: Text('Audio'),
-            ),
-          ),
-          Positioned(
-            // TODO: Add Text Counter under all icons
-            bottom: 80,
-            right: 5,
-            child: Column(
-              children: [
-                SideActionIcons(
-                  icon: Icons.account_circle,
-                  count: '100',
-                  action: () {},
+        ],
+      ),
+    );
+  }
+
+  Container pageViewVideoPlayer() {
+    return Container(
+      child: PageView.builder(
+        itemCount: 10,
+        scrollDirection: Axis.vertical,
+        itemBuilder: (context, i) => Container(
+          child: Stack(
+            children: [
+              Container(
+                child: _controller.value.initialized
+                    ? GestureDetector(
+                        child: AspectRatio(
+                          aspectRatio: _controller.value.aspectRatio,
+                          child: VideoPlayer(_controller),
+                        ),
+                        onTap: () {
+                          setState(() {
+                            _controller.value.isPlaying
+                                ? _controller.pause()
+                                : _controller.play();
+                          });
+                        },
+                      )
+                    : Container(),
+              ),
+              Positioned(
+                bottom: 150,
+                child: Container(
+                  child: Text('@user'),
                 ),
-                SizedBox(
-                  height: 12,
-                ),
-                SideActionIcons(
-                  icon: Icons.favorite,
-                  count: '100',
-                  action: () {},
-                ),
-                SizedBox(
-                  height: 12,
-                ),
-                SideActionIcons(
-                  icon: Icons.message,
-                  count: '100',
-                  action: () {},
-                ),
-                SizedBox(
-                  height: 12,
-                ),
-                SideActionIcons(
-                  icon: Icons.share,
-                  count: '100',
-                  action: () {},
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                CircleAvatar(
-                  radius: 25,
-                  child: Icon(
-                    Icons.music_note,
-                    color: Colors.white,
-                    size: 45,
+              ),
+              Positioned(
+                bottom: 120,
+                child: Container(
+                  child: Text(
+                    'Caption',
+                    style: TextStyle(color: Colors.red),
                   ),
                 ),
-              ],
-            ),
+              ),
+              Positioned(
+                bottom: 70,
+                child: Container(
+                  child: Text('Audio'),
+                ),
+              ),
+              Positioned(
+                // TODO: Add Text Counter under all icons
+                bottom: 80,
+                right: 5,
+                child: Column(
+                  children: [
+                    SideActionIcons(
+                      icon: Icons.account_circle,
+                      count: '100',
+                      action: () {},
+                    ),
+                    SizedBox(
+                      height: 12,
+                    ),
+                    SideActionIcons(
+                      icon: Icons.favorite,
+                      count: '100',
+                      action: () {},
+                    ),
+                    SizedBox(
+                      height: 12,
+                    ),
+                    SideActionIcons(
+                      icon: Icons.message,
+                      count: '100',
+                      action: () {},
+                    ),
+                    SizedBox(
+                      height: 12,
+                    ),
+                    SideActionIcons(
+                      icon: Icons.share,
+                      count: '100',
+                      action: () {},
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    CircleAvatar(
+                      radius: 25,
+                      child: Icon(
+                        Icons.music_note,
+                        color: Colors.white,
+                        size: 45,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
-        ],
+          // Center(
+          //   child: Text('For you ' + i.toString()),
+          // ),
+        ),
       ),
     );
   }
