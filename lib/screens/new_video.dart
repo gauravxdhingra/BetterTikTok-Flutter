@@ -98,9 +98,12 @@ class _NewVideoState extends State<NewVideo> {
                   // : CameraPreview(controllerBack)
                   ,
                 ),
-                Positioned(
-                  bottom: 0,
-                  child: RecordButton(),
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 25),
+                    child: RecordButton(),
+                  ),
                 ),
                 Positioned(
                   bottom: 0,
@@ -108,23 +111,6 @@ class _NewVideoState extends State<NewVideo> {
                   child: IconButton(
                     icon: Icon(Icons.switch_camera),
                     onPressed: () {
-                      // if(controller.)
-                      // print(controller.description.lensDirection);
-                      // if (controller.description.lensDirection
-                      //     .toString()
-                      //     .contains("front")) {
-                      //   controller = CameraController(
-                      //     cameras[1],
-                      //     ResolutionPreset.veryHigh,
-                      //   );
-                      //   setState(() {});
-                      // } else {
-                      //   controller = CameraController(
-                      //     cameras[0],
-                      //     ResolutionPreset.veryHigh,
-                      //   );
-                      //   setState(() {});
-                      // }
                       setState(() {
                         isFront = !isFront;
                       });

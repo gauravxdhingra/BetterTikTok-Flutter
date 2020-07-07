@@ -142,7 +142,11 @@ class _HomeState extends State<Home> {
                           });
                         },
                       )
-                    : Container(),
+                    : Container(
+                        child: Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                      ),
               ),
               // TODO Play Pause Indicator
               // if (isTapped)
@@ -250,8 +254,7 @@ class SideActionIcons extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
+    return Stack(
       children: [
         IconButton(
           icon: Icon(icon),
@@ -260,7 +263,22 @@ class SideActionIcons extends StatelessWidget {
           onPressed: action,
           padding: EdgeInsets.all(0),
         ),
-        Text(count),
+        Positioned(
+          bottom: 0,
+          left: 12,
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.white54,
+              borderRadius: BorderRadius.circular(5),
+            ),
+            child: Text(
+              count,
+              style: TextStyle(
+                color: Colors.black,
+              ),
+            ),
+          ),
+        ),
       ],
     );
   }

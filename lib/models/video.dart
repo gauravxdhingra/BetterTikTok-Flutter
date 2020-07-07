@@ -39,7 +39,5 @@ class Video {
       userPhotoUrl: doc['userPhotoUrl'],
     );
   }
-
 // TODO: Comments for video - other class
-
 }
