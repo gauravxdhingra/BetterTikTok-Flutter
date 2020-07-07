@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
+import 'package:path_provider/path_provider.dart';
 
 class NewVideo extends StatefulWidget {
   NewVideo({Key key}) : super(key: key);
@@ -13,10 +16,12 @@ class NewVideo extends StatefulWidget {
 int selected = 1;
 
 class _NewVideoState extends State<NewVideo> {
-  CameraController controllerFront;
+  CameraController controller;
   // CameraController controllerBack;
   List<CameraDescription> cameras;
   bool isFront = true;
+  int selectedCameraIdx = 1;
+  String videoPath;
 
   @override
   void initState() {
@@ -25,12 +30,12 @@ class _NewVideoState extends State<NewVideo> {
       final Map arguments = ModalRoute.of(context).settings.arguments as Map;
       cameras = arguments["cameras"];
       print(cameras);
-      controllerFront =
-          CameraController(cameras[1], ResolutionPreset.ultraHigh);
-      controllerFront.initialize().then((_) {
+      controller = CameraController(cameras[1], ResolutionPreset.ultraHigh);
+      controller.initialize().then((_) {
         if (!mounted) {
           return;
         }
+        _onCameraSwitched(cameras[selectedCameraIdx]).then((void v) {});
         setState(() {});
       });
       // controllerBack = CameraController(cameras[0], ResolutionPreset.veryHigh);
@@ -46,16 +51,16 @@ class _NewVideoState extends State<NewVideo> {
   @override
   void dispose() {
     // controllerBack?.dispose();
-    controllerFront?.dispose();
+    controller?.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    if (controllerFront != null)
+    if (controller != null)
       return Scaffold(
         backgroundColor: Colors.black,
-        body: !controllerFront.value.isInitialized
+        body: !controller.value.isInitialized
             ? Container(
                 child: Center(
                   child: IconButton(
@@ -72,8 +77,8 @@ class _NewVideoState extends State<NewVideo> {
                 child: Stack(
                   children: [
                     AspectRatio(
-                      aspectRatio: controllerFront.value.aspectRatio,
-                      child: CameraPreview(controllerFront),
+                      aspectRatio: controller.value.aspectRatio,
+                      child: CameraPreview(controller),
                     ),
                     Align(
                       alignment: Alignment.bottomCenter,
@@ -97,6 +102,8 @@ class _NewVideoState extends State<NewVideo> {
                           onPressed: () {
                             setState(() {
                               isFront = !isFront;
+                              _onSwitchCamera();
+                              // _onCameraSwitched(cameras[0]);
                             });
                           },
                         ),
@@ -118,6 +125,103 @@ class _NewVideoState extends State<NewVideo> {
         child: CircularProgressIndicator(),
       ),
     );
+  }
+
+  Future<void> _onCameraSwitched(CameraDescription cameraDescription) async {
+    if (controller != null) {
+      await controller.dispose();
+    }
+
+    controller =
+        CameraController(cameraDescription, ResolutionPreset.ultraHigh);
+
+    // If the controller is updated then update the UI.
+    controller.addListener(() {
+      if (mounted) {
+        setState(() {});
+      }
+
+      if (controller.value.hasError) {}
+    });
+
+    try {
+      await controller.initialize();
+    } on CameraException catch (e) {
+      _showCameraException(e);
+    }
+
+    if (mounted) {
+      setState(() {});
+    }
+  }
+
+  void _onSwitchCamera() {
+    selectedCameraIdx =
+        (selectedCameraIdx < cameras.length - 1) ? selectedCameraIdx + 1 : 0;
+    CameraDescription selectedCamera = cameras[selectedCameraIdx];
+
+    _onCameraSwitched(selectedCamera);
+
+    setState(() {
+      selectedCameraIdx = selectedCameraIdx;
+    });
+  }
+
+  void _onRecordButtonPressed() {
+    _startVideoRecording().then((String filePath) {
+      if (filePath != null) {}
+    });
+  }
+
+  void _onStopButtonPressed() {
+    _stopVideoRecording().then((_) {
+      if (mounted) setState(() {});
+    });
+  }
+
+  Future<String> _startVideoRecording() async {
+    if (!controller.value.isInitialized) {
+      return null;
+    }
+
+    // Do nothing if a recording is on progress
+    if (controller.value.isRecordingVideo) {
+      return null;
+    }
+
+    final Directory appDirectory = await getApplicationDocumentsDirectory();
+    final String videoDirectory = '${appDirectory.path}/Videos';
+    await Directory(videoDirectory).create(recursive: true);
+    final String currentTime = DateTime.now().millisecondsSinceEpoch.toString();
+    final String filePath = '$videoDirectory/$currentTime.mp4';
+
+    try {
+      await controller.startVideoRecording(filePath);
+      videoPath = filePath;
+    } on CameraException catch (e) {
+      _showCameraException(e);
+      return null;
+    }
+
+    return filePath;
+  }
+
+  Future<void> _stopVideoRecording() async {
+    if (!controller.value.isRecordingVideo) {
+      return null;
+    }
+
+    try {
+      await controller.stopVideoRecording();
+    } on CameraException catch (e) {
+      _showCameraException(e);
+      return null;
+    }
+  }
+
+  void _showCameraException(CameraException e) {
+    String errorText = 'Error: ${e.code}\nError Message: ${e.description}';
+    print(errorText);
   }
 }
 
