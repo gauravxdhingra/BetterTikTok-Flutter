@@ -128,7 +128,7 @@ class _BottomNavBarHomeState extends State<BottomNavBarHome> {
 
   goToNewVideo() async {
     List<CameraDescription> cameras = await availableCameras();
-    Navigator.pushNamed(
+    await Navigator.pushNamed(
       context,
       NewVideo.routename,
       arguments: {"cameras": cameras},

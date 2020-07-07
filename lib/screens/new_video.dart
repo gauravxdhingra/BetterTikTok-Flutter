@@ -10,6 +10,8 @@ class NewVideo extends StatefulWidget {
   _NewVideoState createState() => _NewVideoState();
 }
 
+int selected = 1;
+
 class _NewVideoState extends State<NewVideo> {
   CameraController controllerFront;
   // CameraController controllerBack;
@@ -23,7 +25,8 @@ class _NewVideoState extends State<NewVideo> {
       final Map arguments = ModalRoute.of(context).settings.arguments as Map;
       cameras = arguments["cameras"];
       print(cameras);
-      controllerFront = CameraController(cameras[1], ResolutionPreset.veryHigh);
+      controllerFront =
+          CameraController(cameras[1], ResolutionPreset.ultraHigh);
       controllerFront.initialize().then((_) {
         if (!mounted) {
           return;
@@ -49,111 +52,71 @@ class _NewVideoState extends State<NewVideo> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.black,
-      body: !controllerFront.value.isInitialized
-          // &&
-          //         !controllerBack.value.isInitialized
-          ? Container(
-              child: Center(
-                child: IconButton(
-                  icon: Icon(Icons.switch_camera),
-                  onPressed: () {
-                    setState(() {
-                      isFront = !isFront;
-                    });
-                    // if(controller.)
-                    // print(controller.description.lensDirection);
-                    // if (controller.description.lensDirection
-                    //     .toString()
-                    //     .contains("front")) {
-                    //   controller = CameraController(
-                    //     cameras[0],
-                    //     ResolutionPreset.veryHigh,
-                    //   );
-                    //   setState(() {});
-                    // } else {
-                    //   controller = CameraController(
-                    //     cameras[1],
-                    //     ResolutionPreset.veryHigh,
-                    //   );
-                    //   setState(() {});
-                    // }
-                  },
+    if (controllerFront != null)
+      return Scaffold(
+        backgroundColor: Colors.black,
+        body: !controllerFront.value.isInitialized
+            ? Container(
+                child: Center(
+                  child: IconButton(
+                    icon: Icon(Icons.switch_camera),
+                    onPressed: () {
+                      setState(() {
+                        isFront = !isFront;
+                      });
+                    },
+                  ),
                 ),
-              ),
-            )
-          : SafeArea(
-              child: Stack(
-                children: [
-                  AspectRatio(
-                    aspectRatio:
-                        // isFront
-                        //     ?
-                        controllerFront.value.aspectRatio
-                    // : controllerBack.value.aspectRatio
-                    ,
-                    child:
-                        // isFront
-                        //     ?
-                        CameraPreview(controllerFront)
-                    // : CameraPreview(controllerBack)
-                    ,
-                  ),
-                  Align(
-                    alignment: Alignment.bottomCenter,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 25),
-                      child: RecordButton(),
+              )
+            : SafeArea(
+                child: Stack(
+                  children: [
+                    AspectRatio(
+                      aspectRatio: controllerFront.value.aspectRatio,
+                      child: CameraPreview(controllerFront),
                     ),
-                  ),
-                  // Positioned(
-                  //   bottom: 0,
-                  //   right: 0,
-                  //   child: Padding(
-                  //     padding: EdgeInsets.symmetric(horizontal: 20, vertical: 50),
-                  //     child: IconButton(
-                  //       icon: Icon(
-                  //         Icons.switch_camera,
-                  //         size: 30,
-                  //       ),
-                  //       onPressed: () {
-                  //         setState(() {
-                  //           isFront = !isFront;
-                  //         });
-                  //       },
-                  //     ),
-                  //   ),
-                  // ),
-                  Positioned(
-                    bottom: 0,
-                    left: 0,
-                    child: Padding(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 20, vertical: 50),
-                      child: IconButton(
-                        icon: Icon(
-                          Icons.photo,
-                          size: 30,
-                          color: Colors.white,
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            isFront = !isFront;
-                          });
-                        },
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 25),
+                        child: RecordButton(),
                       ),
                     ),
-                  ),
-                  Positioned(
-                    top: MediaQuery.of(context).padding.top,
-                    right: 10,
-                    child: ControlBar(),
-                  ),
-                  SpeedControlBar(),
-                ],
+                    Positioned(
+                      bottom: 0,
+                      left: 0,
+                      child: Padding(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 20, vertical: 50),
+                        child: IconButton(
+                          icon: Icon(
+                            Icons.photo,
+                            size: 30,
+                            color: Colors.white,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              isFront = !isFront;
+                            });
+                          },
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      top: MediaQuery.of(context).padding.top,
+                      right: 10,
+                      child: ControlBar(),
+                    ),
+                    SpeedControlBar(),
+                  ],
+                ),
               ),
-            ),
+      );
+    return Scaffold(
+      backgroundColor: Colors.black,
+      body: Center(
+        child: CircularProgressIndicator(),
+      ),
     );
   }
 }
@@ -221,36 +184,75 @@ class ControlBar extends StatelessWidget {
   }
 }
 
-class SpeedControlBar extends StatelessWidget {
+class SpeedControlBar extends StatefulWidget {
   const SpeedControlBar({
     Key key,
   }) : super(key: key);
 
+  @override
+  _SpeedControlBarState createState() => _SpeedControlBarState();
+}
+
+class _SpeedControlBarState extends State<SpeedControlBar> {
   @override
   Widget build(BuildContext context) {
     return Positioned(
       bottom: 150,
       child: Container(
         width: MediaQuery.of(context).size.width,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SpeedControlBoxes(
-              title: '0.25x',
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 50),
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.black12,
+              borderRadius: BorderRadius.circular(5),
             ),
-            SpeedControlBoxes(
-              title: '0.5x',
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                SpeedControlBoxes(
+                  title: '0.25x',
+                  selectedd: 25,
+                  onSpeed: () {
+                    selected = 25;
+                    setState(() {});
+                  },
+                ),
+                SpeedControlBoxes(
+                  title: '0.5x',
+                  selectedd: 5,
+                  onSpeed: () {
+                    selected = 5;
+                    setState(() {});
+                  },
+                ),
+                SpeedControlBoxes(
+                  title: '1x',
+                  selectedd: 1,
+                  onSpeed: () {
+                    selected = 1;
+                    setState(() {});
+                  },
+                ),
+                SpeedControlBoxes(
+                  title: '1.5x',
+                  selectedd: 15,
+                  onSpeed: () {
+                    selected = 15;
+                    setState(() {});
+                  },
+                ),
+                SpeedControlBoxes(
+                  title: '2x',
+                  selectedd: 2,
+                  onSpeed: () {
+                    selected = 2;
+                    setState(() {});
+                  },
+                ),
+              ],
             ),
-            SpeedControlBoxes(
-              title: '1x',
-            ),
-            SpeedControlBoxes(
-              title: '1.5x',
-            ),
-            SpeedControlBoxes(
-              title: '2x',
-            ),
-          ],
+          ),
         ),
       ),
     );
@@ -261,18 +263,28 @@ class SpeedControlBoxes extends StatelessWidget {
   const SpeedControlBoxes({
     Key key,
     this.title,
+    this.selectedd,
+    this.onSpeed,
   }) : super(key: key);
 
   final String title;
+  final int selectedd;
+  final Function onSpeed;
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      decoration: BoxDecoration(
+        color: this.selectedd == selected ? Colors.red : null,
+        borderRadius: BorderRadius.circular(5),
+      ),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-        child: Container(
-          // color: Colors.red,
-          child: Text(title),
+        child: GestureDetector(
+          child: Container(
+            child: Text(title),
+          ),
+          onTap: onSpeed,
         ),
       ),
     );
@@ -289,7 +301,7 @@ class RecordButton extends StatelessWidget {
     return Container(
       child: CircleAvatar(
         backgroundColor: Colors.red,
-        radius: 50,
+        radius: 40,
       ),
     );
   }
