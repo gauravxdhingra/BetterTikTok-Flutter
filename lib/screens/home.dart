@@ -16,10 +16,11 @@ class _HomeState extends State<Home> {
     _pageController = PageController();
     super.initState();
     _controller = VideoPlayerController.network(
-        'https://firebasestorage.googleapis.com/v0/b/bettertiktok-7ae7a.appspot.com/o/1.mp4?alt=media&token=10998175-ce89-4d49-99bb-5c018de5b3d7')
-      ..initialize().then((_) {
+      'https://firebasestorage.googleapis.com/v0/b/bettertiktok-7ae7a.appspot.com/o/1.mp4?alt=media&token=10998175-ce89-4d49-99bb-5c018de5b3d7',
+    )..initialize().then((_) {
         // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
         _controller.play();
+        _controller.setLooping(true);
         setState(() {});
       });
   }
@@ -42,62 +43,67 @@ class _HomeState extends State<Home> {
                 controller: _pageController,
                 onPageChanged: (i) {
                   setState(() {
-                    // print(i);
                     page = i;
                   });
                 },
               ),
             ],
           ),
-          Column(
-            children: [
-              SizedBox(height: MediaQuery.of(context).padding.top + 30),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Following',
-                        style: TextStyle(fontSize: 16, color: Colors.white),
-                      ),
-                      Container(
-                        height: 5,
-                      ),
-                      if (page == 0)
-                        CircleAvatar(
-                          backgroundColor: Colors.blue,
-                          radius: 3,
-                        ),
-                    ],
-                  ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Text(
-                        'For you',
-                        style: TextStyle(fontSize: 16, color: Colors.white),
-                      ),
-                      Container(
-                        height: 5,
-                      ),
-                      if (page == 1)
-                        CircleAvatar(
-                          backgroundColor: Colors.blue,
-                          radius: 3,
-                        ),
-                    ],
-                  ),
-                ],
-              ),
-            ],
-          ),
+          pageViewTabs(context),
         ],
       ),
     );
   }
+
+  Column pageViewTabs(BuildContext context) {
+    return Column(
+      children: [
+        SizedBox(height: MediaQuery.of(context).padding.top + 30),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Text(
+                  'Following',
+                  style: TextStyle(fontSize: 16, color: Colors.white),
+                ),
+                Container(
+                  height: 5,
+                ),
+                if (page == 0)
+                  CircleAvatar(
+                    backgroundColor: Colors.blue,
+                    radius: 3,
+                  ),
+              ],
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Text(
+                  'For you',
+                  style: TextStyle(fontSize: 16, color: Colors.white),
+                ),
+                Container(
+                  height: 5,
+                ),
+                if (page == 1)
+                  CircleAvatar(
+                    backgroundColor: Colors.blue,
+                    radius: 3,
+                  ),
+              ],
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  // bool isTapped = false;
 
   Container pageViewVideoPlayer() {
     return Container(
@@ -108,6 +114,9 @@ class _HomeState extends State<Home> {
           child: Stack(
             children: [
               Container(
+                padding: EdgeInsets.only(
+                  top: MediaQuery.of(context).padding.top + 10,
+                ),
                 child: _controller.value.initialized
                     ? GestureDetector(
                         child: AspectRatio(
@@ -117,13 +126,35 @@ class _HomeState extends State<Home> {
                         onTap: () {
                           setState(() {
                             _controller.value.isPlaying
-                                ? _controller.pause()
-                                : _controller.play();
+                                    ? _controller.pause()
+                                    // .whenComplete(() {
+                                    //     setState(() {
+                                    //       isTapped = true;
+                                    //     });
+                                    //   })
+                                    : _controller.play()
+                                // .whenComplete(() {
+                                //     setState(() {
+                                //       isTapped = true;
+                                //     });
+                                //   })
+                                ;
                           });
                         },
                       )
                     : Container(),
               ),
+              // TODO Play Pause Indicator
+              // if (isTapped)
+              // Align(
+              //   alignment: Alignment.center,
+              //   child: AnimatedContainer(
+              //     duration: Duration(
+              //       milliseconds: 400,
+              //     ),
+              //     child: Icon(Icons.play_arrow),
+              //   ),
+              // ),
               Positioned(
                 bottom: 150,
                 child: Container(
