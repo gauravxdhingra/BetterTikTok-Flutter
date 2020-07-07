@@ -5,8 +5,27 @@ class PostScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Text("Post Now"),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Add Post'),
+      ),
+      body: Container(
+        child: Column(
+          children: [
+            Container(
+              width: MediaQuery.of(context).size.width,
+              height: 250,
+              color: Colors.red,
+            ),
+            TextFormField(),
+            TextFormField(),
+            FlatButton(
+              onPressed: () {},
+              child: Text('Post Now'),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

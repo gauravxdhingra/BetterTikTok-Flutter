@@ -84,7 +84,33 @@ class _NewVideoState extends State<NewVideo> {
                       alignment: Alignment.bottomCenter,
                       child: Padding(
                         padding: const EdgeInsets.symmetric(vertical: 25),
-                        child: RecordButton(),
+                        child: Container(
+                          child: CircleAvatar(
+                            backgroundColor: Colors.red,
+                            radius: 40,
+                            child: controller != null &&
+                                    controller.value.isInitialized &&
+                                    !controller.value.isRecordingVideo
+                                ? IconButton(
+                                    icon: const Icon(Icons.videocam),
+                                    color: Colors.white,
+                                    onPressed: controller != null &&
+                                            controller.value.isInitialized &&
+                                            !controller.value.isRecordingVideo
+                                        ? _onRecordButtonPressed
+                                        : null,
+                                  )
+                                : IconButton(
+                                    icon: const Icon(Icons.stop),
+                                    color: Colors.white,
+                                    onPressed: controller != null &&
+                                            controller.value.isInitialized &&
+                                            controller.value.isRecordingVideo
+                                        ? _onStopButtonPressed
+                                        : null,
+                                  ),
+                          ),
+                        ),
                       ),
                     ),
                     Positioned(
@@ -96,6 +122,26 @@ class _NewVideoState extends State<NewVideo> {
                         child: IconButton(
                           icon: Icon(
                             Icons.photo,
+                            size: 30,
+                            color: Colors.white,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              isFront = !isFront;
+                            });
+                          },
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      bottom: 0,
+                      right: 0,
+                      child: Padding(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 20, vertical: 50),
+                        child: IconButton(
+                          icon: Icon(
+                            Icons.switch_video,
                             size: 30,
                             color: Colors.white,
                           ),
@@ -194,6 +240,7 @@ class _NewVideoState extends State<NewVideo> {
     await Directory(videoDirectory).create(recursive: true);
     final String currentTime = DateTime.now().millisecondsSinceEpoch.toString();
     final String filePath = '$videoDirectory/$currentTime.mp4';
+    print(filePath);
 
     try {
       await controller.startVideoRecording(filePath);
@@ -390,22 +437,6 @@ class SpeedControlBoxes extends StatelessWidget {
           ),
           onTap: onSpeed,
         ),
-      ),
-    );
-  }
-}
-
-class RecordButton extends StatelessWidget {
-  const RecordButton({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: CircleAvatar(
-        backgroundColor: Colors.red,
-        radius: 40,
       ),
     );
   }
