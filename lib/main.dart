@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tiktok_alt/provider/auth_provider.dart';
+import 'package:tiktok_alt/provider/storage_provider.dart';
 import 'package:tiktok_alt/provider/users_provider.dart';
 import 'package:tiktok_alt/screens/home_pageview.dart';
 import 'package:flutter/services.dart';
 import 'package:tiktok_alt/screens/login_signup_screen.dart';
 import 'package:tiktok_alt/screens/new_video.dart';
+import 'package:tiktok_alt/screens/post_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -26,6 +28,9 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider.value(
             value: UsersProvider(),
           ),
+          ChangeNotifierProvider.value(
+            value: StorageProvider(),
+          ),
         ],
         child: MaterialApp(
           title: 'Flutter Demo',
@@ -45,7 +50,8 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           // home: HomepageView(),
           routes: {
-            '/': (ctx) => LoginSignup(),
+            '/': (ctx) => PostScreen(),
+            //  LoginSignup(),
             HomepageView.routename: (ctx) => HomepageView(),
             NewVideo.routename: (ctx) => NewVideo(),
           },
